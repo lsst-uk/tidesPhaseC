@@ -800,7 +800,6 @@ minimum_required_keywords = [
     "CLASSIFICATION",
     "COMPLETENESS",
     "PARALLAX",
-    "TEST1","TEST2","TEST3","TEST4",
 ]
 
 ### use a dictionary to define expected data types
@@ -863,7 +862,8 @@ if uploaded_file is not None:
 
     #Check there are no Falses in the meetMinimum
     if np.sum(~meetMinimum)!=0:
-        st.write('The following **required** columns are missing:', pd.DataFrame(np.array(minimum_required_keywords)[~meetMinimum], columns=['COLUMN NAME']))
+        st.write('The following **required** columns are missing:')
+        st.dataframe(pd.DataFrame(np.array(minimum_required_keywords)[~meetMinimum], columns=['COLUMN NAME']),use_container_width=True)
         meetMinFlag = 0
         st.write(":red[Please make the necesary changes to your catalogue and re-upload a file to try again.]")
 
@@ -872,14 +872,22 @@ if uploaded_file is not None:
     try:
         convertedDF = dataframe.astype(col_format)
         convertedDtype = 1
-    except:
-        st.title("Cannot convert data to required data type")
-        st.write("Please check your data format")
+        st.title("Checking data")
+        st.write("✅ Data types agree with 4MOST requirements")
+    except Exception as e:
+        st.title("❌ Cannot convert data to required data type")
+        st.write("""Please check your data format.
+        Error message: """)
+        st.code(e,language='shellSession')
+        st.write(":red[Please fix errors in catalogue and reupload.]")
 
-meetMinFlag = 1
 st.title("Send catalogue to 4MOST")
-st.write("Once your catalogue file has passed all the necessary checks, the button below will become active.")
+
 readyBitFlip = 1 - (convertedDtype & meetMinFlag)
+if readyBitFlip != 1:
+  st.write("Your catalogue has passed all the necessary checks. You may now upload by clicking the button below.")
+else:
+  st.write("Upload diabled until catalogue changes made.")
 # Create a button and disable it if it was clicked
 st.button(
     f"Send catalogue to 4MOST",
