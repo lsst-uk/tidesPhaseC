@@ -887,7 +887,7 @@ readyBitFlip = 1 - (convertedDtype & meetMinFlag)
 if readyBitFlip != 1:
   st.write("Your catalogue has passed all the necessary checks. You may now upload by clicking the button below.")
 else:
-  st.write("Upload diabled until catalogue changes made.")
+  st.write("Upload disabled until catalogue changes made.")
 # Create a button and disable it if it was clicked
 st.button(
     f"Send catalogue to 4MOST",
