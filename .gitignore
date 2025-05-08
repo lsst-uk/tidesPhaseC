@@ -161,3 +161,8 @@ cython_debug/
 
 #Streamlit Ignore
 secrets.toml
+
+#classifyApp Ignore
+tmpsnid*
+.DS_Store
+.conda

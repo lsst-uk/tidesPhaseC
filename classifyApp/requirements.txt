@@ -1,0 +1,7 @@
+nicegui
+pandas
+pysnid
+tables
+plotly
+astropy
+numpy
